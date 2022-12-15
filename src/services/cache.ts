@@ -61,6 +61,6 @@ mongoose.Query.prototype.exec = async function () {
 export default {
   clearHash(hashKey) {
     console.log(hashKey, "deleted");
-    client.flushAll();
+    client.del(hashKey);
   },
 };

@@ -9,4 +9,5 @@ export const clearCache = async (
   await next();
 
   cache.clearHash(req.user ? req.user.id : "");
+  return;
 };

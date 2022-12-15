@@ -51,7 +51,7 @@ export const editUser = async (req: Request, res: Response) => {
   req.user.lastName = lastName;
   req.user.password = password;
   await req.user.save();
-  return res.status(200).json({
+  res.status(200).json({
     status: "ok",
     data: req.user,
   });
