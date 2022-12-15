@@ -45,6 +45,7 @@ export const postProperty = async (req: Request, res: Response) => {
     type,
     propertyType,
   } = req.body;
+  console.log(req.body);
 
   const home = await Property.create({
     name,

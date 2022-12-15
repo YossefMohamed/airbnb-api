@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { getUser } from "../../controllers/userController";
 import { clearCache } from "../../middlewares/clearCache";
+import { validateRequest } from "../../middlewares/validate-request";
+import { getUserValidators } from "../../services/validators/user/getUserValidators";
 
 const router = Router();
 
@@ -31,6 +33,6 @@ const router = Router();
  *        description: User Not Authorized!
  */
 
-router.get("/:id", clearCache, getUser);
+router.get("/:id", clearCache, getUserValidators, validateRequest, getUser);
 
 export { router as getUserRouter };

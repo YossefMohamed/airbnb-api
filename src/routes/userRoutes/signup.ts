@@ -2,7 +2,7 @@ import { Router } from "express";
 import { signup } from "../../controllers/userController";
 import { clearCache } from "../../middlewares/clearCache";
 import { validateRequest } from "../../middlewares/validate-request";
-import { signupValidators } from "../../services/userRoutesValidator";
+import { signupValidators } from "../../services/validators/user/signupValidators";
 
 const router = Router();
 

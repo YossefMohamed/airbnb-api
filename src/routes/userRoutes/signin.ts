@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { signin } from "../../controllers/userController";
+import { validateRequest } from "../../middlewares/validate-request";
+import { signinValidators } from "../../services/validators/user/signinValidators";
 
 const router = Router();
 
@@ -27,6 +29,6 @@ const router = Router();
  *        description: Invalid Email Or Password
  */
 
-router.post("/signin", signin);
+router.post("/signin", signinValidators, validateRequest, signin);
 
 export { router as signinRouter };

@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 export interface IProperty extends Document {
   name: String;
-  price: String;
+  price: number;
   _id: mongoose.Types.ObjectId;
   deleted: Boolean;
   description: string;
@@ -24,6 +24,53 @@ export interface IProperty extends Document {
   propertyImages: string[];
   propertyType: string;
 }
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    CreateProperty:
+ *      type: object
+ *      required:
+ *        - price
+ *        - name
+ *        - description
+ *        - type
+ *        - width
+ *        - height
+ *        - propertyType
+ *        - geolocation
+ *      properties:
+ *        price:
+ *          type: number
+ *          default: 99.9
+ *        name:
+ *          type: string
+ *          default: Villa For Sale
+ *        description:
+ *          type: string
+ *          default: Doe
+ *        type:
+ *          type: string
+ *          default: sell
+ *        propertyType:
+ *          type: string
+ *          default: villa
+ *        height:
+ *          type: number
+ *          default: 45
+ *        width:
+ *          type: number
+ *          default: 45
+ *        geolocation:
+ *          type: object
+ *          default:  {
+ *                "type" : "Point",
+ *                 "coordinates" : [
+ *                  30.9785244 ,
+ *                  30.0526845
+ *                  ]
+ *                  }
+ */
 
 const propertySchema: Schema<IProperty> = new mongoose.Schema<IProperty>(
   {
@@ -68,7 +115,7 @@ const propertySchema: Schema<IProperty> = new mongoose.Schema<IProperty>(
       },
     },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     deleted: {
