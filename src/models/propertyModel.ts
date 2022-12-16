@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { IUser } from "./userModel";
 
 export interface IProperty extends Document {
   name: String;
@@ -16,11 +17,7 @@ export interface IProperty extends Document {
     coordinates: [number];
   };
   type: string;
-  owner: {
-    _id: mongoose.Types.ObjectId;
-    name: String;
-    email: String;
-  };
+  owner: mongoose.PopulatedDoc<IUser>;
   propertyImages: string[];
   propertyType: string;
 }
@@ -123,7 +120,7 @@ const propertySchema: Schema<IProperty> = new mongoose.Schema<IProperty>(
       default: false,
     },
     owner: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
@@ -143,13 +140,12 @@ const propertySchema: Schema<IProperty> = new mongoose.Schema<IProperty>(
   }
 );
 
-propertySchema.pre(/^find/, function (this, next) {
-  this.populate("owner", {
-    name: 1,
-    _id: 1,
-    email: 1,
-  });
-  next();
-});
+// propertySchema.pre(/^find/, function (this, next) {
+//   this.populate({
+//     path: "owner",
+//     model: "User",
+//   });
+//   next();
+// });
 const Property = mongoose.model<IProperty>("Property", propertySchema);
 export default Property;

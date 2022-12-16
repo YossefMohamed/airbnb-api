@@ -20,6 +20,6 @@ export const signupValidators = [
         throw new Error("Passwords must be same");
       }
     })
-    .isEmpty()
+    .exists()
     .withMessage("Passwords Cant Be Empty"),
 ];
