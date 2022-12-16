@@ -11,8 +11,10 @@ test("testing for user signup returns a 201 on successful", async () => {
       email: "test@test.com",
       gender: "male",
       password: "12345678",
+      passwordConfirmation: "12345678",
     })
-    .expect(201);
+    .expect(201)
+    .catch((err) => console.log(err));
 });
 
 test("testing for invaled user email on signup returns a 400 on unsuccessful", async () => {
@@ -24,6 +26,7 @@ test("testing for invaled user email on signup returns a 400 on unsuccessful", a
       email: "invalid email",
       gender: "male",
       password: "123456781",
+      passwordConfirmation: "123456781",
     })
     .expect(400);
 });
@@ -37,6 +40,7 @@ test("testing for invaled user password length on signup returns a 400 on unsucc
       email: "invalid email",
       gender: "male",
       password: "12",
+      passwordConfirmation: "12",
     })
     .expect(400);
 });
@@ -50,6 +54,7 @@ test("testing for invaled gender on signup returns a 400 on unsuccessful", async
       email: "invalid email",
       gender: "male",
       password: "121212121212",
+      passwordConfirmation: "121212121212",
     })
     .expect(400);
 });
@@ -78,6 +83,7 @@ test("disallows duplicate emails", async () => {
       lastName: "test",
       email: "test@test.com",
       password: "12345678",
+      passwordConfirmation: "12345678",
       gender: "male",
     })
     .expect(201);
@@ -89,6 +95,8 @@ test("disallows duplicate emails", async () => {
       lastName: "test",
       email: "test@test.com",
       password: "12345678",
+      passwordConfirmation: "12345678",
+
       gender: "male",
     })
     .expect(400);

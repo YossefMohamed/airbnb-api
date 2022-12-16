@@ -20,13 +20,14 @@ it("fails when password is not correct", async () => {
       email: "test@test.com",
       gender: "male",
       password: "password",
+      passwordConfirmation: "password",
     })
     .expect(201);
   await request(app)
     .post("/api/users/signin")
     .send({
       email: "test@test.com",
-      password: "gwegweg",
+      password: "gweaaagweg",
     })
     .expect(404);
 });
@@ -40,8 +41,10 @@ it("successful login with code 200", async () => {
       email: "test@test.com",
       gender: "male",
       password: "password",
+      passwordConfirmation: "password",
     })
     .expect(201);
+
   await request(app)
     .post("/api/users/signin")
     .send({

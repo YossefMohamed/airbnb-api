@@ -41,7 +41,6 @@ export const editPropertyValidators = [
     .custom(async (value, { req }) => {
       if (!value.type && value.coordinates.length == 2)
         throw new Error("Please Provide A Valid Coordinates !");
-      console.log("validation done");
 
       return true;
     }),

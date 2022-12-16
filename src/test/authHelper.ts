@@ -12,6 +12,7 @@ export const signin = async () => {
       email: "yossefaa2s@ggmail.com",
       gender: "male",
       password: "12345678",
+      passwordConfirmation: "12345678",
     })
     .expect(201)
     .then((res) => (token = res.body.data.user.token));

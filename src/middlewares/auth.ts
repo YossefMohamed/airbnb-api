@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import { NotAuthorizedError } from "../errors/not-authorized-error";
@@ -41,6 +41,7 @@ export const protect = async (req: any, res: Response, next: any) => {
       token,
       process.env.JWT_SECRET || "randomSecret"
     );
+
     const freshUser = await User.findById(login.id);
 
     if (!freshUser) {
@@ -50,6 +51,6 @@ export const protect = async (req: any, res: Response, next: any) => {
     req.user = freshUser;
     next();
   } catch (error) {
-    next(error);
+    next(new NotAuthorizedError());
   }
 };

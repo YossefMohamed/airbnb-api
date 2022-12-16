@@ -5,6 +5,8 @@ import { deletePropertyRouter } from "./deleteProperty";
 import { editPropertyRouter } from "./editProperty";
 import { getPropertyRouter } from "./getProperty";
 import { getPropertiesRouter } from "./getProperties";
+import { body, header } from "express-validator";
+import { validateRequest } from "../../middlewares/validate-request";
 
 const propertyRouter = Router();
 propertyRouter.use(getPropertyRouter);

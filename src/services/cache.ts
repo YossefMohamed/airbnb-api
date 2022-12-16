@@ -28,7 +28,6 @@ mongoose.Query.prototype.exec = async function () {
   //redis functionality
   // key { query "id" , collection "users"}
   if (!this.useCache) return await exec.apply(this);
-  console.log(JSON.stringify(this.hashKey));
 
   const key = JSON.stringify(
     Object.assign({}, this.getQuery(), {
@@ -47,7 +46,6 @@ mongoose.Query.prototype.exec = async function () {
   }
   const result = await exec.apply(this);
   console.log("from DB");
-  console.log(key);
 
   client.hset(
     JSON.stringify(this.hashKey),
