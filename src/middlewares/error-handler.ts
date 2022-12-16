@@ -16,6 +16,6 @@ export const errorHandler = (
     });
   }
   res.status(500).send({
-    errors: [{ message: "Something wen wrong" }],
+    errors: [{ message: err.message || "Something wen wrong" }],
   });
 };
