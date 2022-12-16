@@ -45,7 +45,6 @@ export const postProperty = async (req: Request, res: Response) => {
     type,
     propertyType,
   } = req.body;
-  console.log(req.body);
 
   const home = await Property.create({
     name,
@@ -60,7 +59,6 @@ export const postProperty = async (req: Request, res: Response) => {
     geolocation,
     owner: req.user._id,
   });
-  console.log(req.user._id);
 
   res.status(201).json({
     status: "ok",
@@ -75,11 +73,6 @@ export const postImagesToProperty = async (
 ) => {
   const { id } = req.params;
   const property = await Property.findById(new mongoose.Types.ObjectId(id));
-  console.log(
-    property,
-    req.files!.length,
-    property?.owner._id.equals(req.user._id)
-  );
 
   if (
     !property ||
@@ -140,7 +133,6 @@ export const editProperty = async (
     req.body;
   const { id } = req.params;
   const property = await Property.findById(new mongoose.Types.ObjectId(id));
-  console.log(req.user._id);
 
   if (property && property.owner.equals(req.user._id)) {
     property.price = price || property.price;
