@@ -18,3 +18,13 @@ export const signin = async () => {
     .then((res) => (token = res.body.data.user.token));
   return token!;
 };
+
+export const getUserId = async () => {
+  let userID: string;
+
+  await request(app)
+    .get("/api/users/all")
+    .expect(200)
+    .then((res) => (userID = res.body.data[0]._id));
+  return userID!;
+};

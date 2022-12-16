@@ -45,11 +45,9 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 export const editUser = async (req: Request, res: Response) => {
   const name = req.body.name ? req.body.name : req.user.name;
   const lastName = req.body.lastName ? req.body.lastName : req.user.lastName;
-  const password = req.body.password ? req.body.password : req.user.password;
 
   req.user.name = name;
   req.user.lastName = lastName;
-  req.user.password = password;
   await req.user.save();
   res.status(200).json({
     status: "ok",
