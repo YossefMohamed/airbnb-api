@@ -8,11 +8,11 @@ import { signinRouter } from "./signin";
 import { signupRoutes } from "./signup";
 
 const userRouter = Router();
-userRouter.use(getAllUsersRouter);
 userRouter.use(signinRouter);
 userRouter.use(signupRoutes);
 
 userRouter.use(protect);
+userRouter.use(getAllUsersRouter);
 userRouter.use(editUserRouter);
 userRouter.use(getCurrentUserRouter);
 userRouter.use(getUserRouter);

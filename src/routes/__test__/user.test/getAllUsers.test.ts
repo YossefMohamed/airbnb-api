@@ -11,12 +11,12 @@ describe("get all user tests", () => {
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
   });
-  //   it("get all users success with invalid token 401", async () => {
-  //     const token = await signin();
+  it("get all users success with invalid token 401", async () => {
+    const token = await signin();
 
-  //     await request(app)
-  //       .get("/api/users/all")
-  //       .set("Authorization", `Bearer textXtext`)
-  //       .expect(401);
-  //   });
+    await request(app)
+      .get("/api/users/all")
+      .set("Authorization", `Bearer textXtext`)
+      .expect(401);
+  });
 });

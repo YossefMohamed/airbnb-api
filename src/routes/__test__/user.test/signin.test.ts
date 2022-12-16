@@ -1,14 +1,14 @@
 import request from "supertest";
 import { app } from "../../../app";
 
-it("fails when email is not existed", async () => {
+it("fails when email is not existed with 400", async () => {
   await request(app)
     .post("/api/users/signin")
     .send({
-      email: "test@test.com",
+      email: "",
       password: "password",
     })
-    .expect(404);
+    .expect(400);
 });
 
 it("fails when password is not correct", async () => {

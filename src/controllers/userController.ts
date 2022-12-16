@@ -103,7 +103,7 @@ export const getUser = async (
 };
 
 export const getAllUsers = async (req: Request, res: Response) => {
-  const users = await User.find().cache({ key: "all" });
+  const users = await User.find().cache({ key: req.user._id });
   res.status(200).json({
     status: "ok",
     data: users,
