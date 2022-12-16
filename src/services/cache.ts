@@ -13,6 +13,7 @@ const client = createClient({
 
 (async () => {
   await client.connect();
+  console.log("Redis Caching Layer Server Is ON");
 })();
 
 client.hget = util.promisify(client.hget);

@@ -60,6 +60,7 @@ export const postProperty = async (req: Request, res: Response) => {
     geolocation,
     owner: req.user._id,
   });
+  console.log(req.user._id);
 
   res.status(201).json({
     status: "ok",
@@ -114,26 +115,34 @@ export const deleteProperty = async (req: Request, res: Response) => {
   const property = await Property.findById(new mongoose.Types.ObjectId(id));
   if (property && req.user._id.equals(property.owner._id)) {
     if (property.deleted === true)
-      return res.status(400).json({
+      res.status(400).json({
         status: "failed",
         message: "Already Deleted",
       });
-    property.deleted = true;
-    await property.save();
-    return res.status(204).json({
-      status: "ok",
-      data: property,
-    });
+    else {
+      property.deleted = true;
+      await property.save();
+      res.status(204).json({
+        status: "ok",
+        data: property,
+      });
+    }
   }
+  throw new NotFoundError("Property Not Found");
 };
 
-export const editProperty = async (req: Request, res: Response) => {
+export const editProperty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { name, price, description, geolocation, type, propertyType } =
     req.body;
   const { id } = req.params;
   const property = await Property.findById(new mongoose.Types.ObjectId(id));
+  console.log(req.user._id);
 
-  if (property && property.owner._id.equals(req.user._id)) {
+  if (property && property.owner.equals(req.user._id)) {
     property.price = price || property.price;
     property.name = name || property.name;
     property.description = description || property.description;
@@ -145,5 +154,7 @@ export const editProperty = async (req: Request, res: Response) => {
       status: "ok",
       data: property,
     });
+  } else {
+    next(new NotFoundError("Property Not Found"));
   }
 };

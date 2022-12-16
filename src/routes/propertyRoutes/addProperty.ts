@@ -6,6 +6,7 @@ import {
 import { clearCache } from "../../middlewares/clearCache";
 import { validateRequest } from "../../middlewares/validate-request";
 import { upload } from "../../services/multer";
+import { addPropertyValidators } from "../../services/validators/property/addPropertyValidators";
 
 const router = Router();
 
@@ -29,7 +30,13 @@ const router = Router();
  *        description: Bad request
  */
 
-router.post("/", clearCache, postProperty);
+router.post(
+  "/",
+  addPropertyValidators,
+  validateRequest,
+  clearCache,
+  postProperty
+);
 
 /**
  * @openapi
