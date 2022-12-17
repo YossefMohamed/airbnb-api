@@ -5,7 +5,30 @@ import { NotFoundError } from "../errors/not-found-error";
 
 export const getProperties = async (req: Request, res: Response) => {
   const pageNumber = Number(req.query.page) || 1;
-  const pages: number = Math.ceil(Number(await Property.find().count()) / 2);
+  const propertyType = req.query.type || "sell";
+  const { lat, long, maxd = Math.abs(Math.max()) } = req.query;
+  const priceFrom = Number(req.query.pf) || 0;
+  const priceTo = Number(req.query.pt) || Math.abs(Math.max());
+  const pages: any = Math.ceil(
+    Number(
+      (
+        await Property.aggregate([
+          {
+            $match: {
+              price: { $gte: priceFrom, $lte: priceTo },
+              type: propertyType,
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              docs: { $sum: 1 },
+            },
+          },
+        ])
+      )[0]?.docs
+    ) / 2
+  );
 
   if (pageNumber > pages || pageNumber < 1) {
     return res.status(200).json({
@@ -19,10 +42,30 @@ export const getProperties = async (req: Request, res: Response) => {
   }
   const properties = await Property.aggregate([
     {
+      $geoNear: {
+        near: { type: "Point", coordinates: [Number(long), Number(lat)] },
+        distanceField: "distance",
+        maxDistance: Number(maxd),
+        spherical: true,
+      },
+    },
+    {
+      $match: {
+        price: { $gte: priceFrom, $lte: priceTo },
+        type: propertyType,
+      },
+    },
+    {
       $sort: { price: 1 },
     },
     { $skip: (pageNumber - 1) * 2 },
     { $limit: 2 },
+    {
+      $match: {
+        price: { $gte: priceFrom, $lte: priceTo },
+        type: propertyType,
+      },
+    },
   ]);
   return res.status(200).json({
     status: "ok",
