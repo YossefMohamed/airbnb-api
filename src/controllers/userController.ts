@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import User, { IUser } from "../models/userModel";
 import { signIn } from "../middlewares/auth";
 import { NotFoundError } from "../errors/not-found-error";
-import cache from "./../services/cache";
+
 export const signup = async (req: Request, res: Response) => {
   const { name, lastName, email, isAdmin, gender, password } = req.body;
 

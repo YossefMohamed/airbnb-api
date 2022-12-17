@@ -35,7 +35,7 @@ mongoose.Query.prototype.exec = async function () {
     })
   );
   // check the key in redis
-  const cacheValue = await client.hget(JSON.stringify(this.hashKey), key);
+  const cacheValue = await client.hget(this.hashKey, key);
 
   if (cacheValue) {
     console.log("from cache");
@@ -46,20 +46,12 @@ mongoose.Query.prototype.exec = async function () {
   }
   const result = await exec.apply(this);
   console.log("from DB");
-
-  client.hset(
-    JSON.stringify(this.hashKey),
-    key,
-    JSON.stringify(result),
-    "EX",
-    1000
-  );
+  client.hset(this.hashKey, key, JSON.stringify(result), "EX", 10);
   return result;
 };
 
 export default {
   clearHash(hashKey) {
-    console.log(hashKey, "deleted");
-    client.del(hashKey);
+    client.del(JSON.stringify(hashKey));
   },
 };
