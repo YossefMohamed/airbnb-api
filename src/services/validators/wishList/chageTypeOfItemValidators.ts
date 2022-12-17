@@ -1,6 +1,7 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 export const changeItemTypeValidators = [
+  param("item").isMongoId().withMessage("Item Not Found").bail(),
   body("type")
     .exists()
     .withMessage("Please Add The Type")
