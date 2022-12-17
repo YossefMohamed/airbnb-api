@@ -27,7 +27,7 @@ export const addToWishList = async (
 export const getUserWishList = async (req: Request, res: Response) => {
   const items = await WishList.find({
     user: req.user._id,
-  });
+  }).cache({ key: req.user._id });
   res.status(200).json({
     status: "ok",
     data: items,
