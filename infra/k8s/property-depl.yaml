@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: property-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: property
+  template:
+    metadata:
+      labels:
+        app: property
+    spec:
+      containers:
+        - name: property
+          image: yossef29/property
+          # env:
+          #   - name: JWT_KEY
+          #     value: "Yossef'sSecret"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: property-srv
+spec:
+  selector:
+    app: property
+  ports:
+    - name: property
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-caching-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-caching
+  template:
+    metadata:
+      labels:
+        app: redis-caching
+    spec:
+      containers:
+        - name: redis-caching
+          image: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-caching-srv
+spec:
+  selector:
+    app: redis-caching
+  ports:
+    - name: db
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
