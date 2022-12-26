@@ -2,7 +2,7 @@ import { Router } from "express";
 import { editUser } from "../controllers/userController";
 import { clearCache } from "../../../property/src/middlewares/clearCache";
 import { validateRequest } from "../../../common/src/middlewares/validate-request";
-import { editUserValidators } from "../../../property/src/services/validators/user/editUserValidators";
+import { editUserValidators } from "../validators/userValidators/user/editUserValidators";
 
 const router = Router();
 

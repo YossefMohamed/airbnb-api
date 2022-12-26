@@ -15,6 +15,7 @@ declare global {
 
 // generate token
 export const signIn = (id: Types.ObjectId, email: string) => {
+ 
   return jwt.sign({ id, email }, process.env.JWT_SECRET || "randomSecret", {
     expiresIn: "30d",
   });

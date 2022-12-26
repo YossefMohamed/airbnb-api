@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import User, { IUser } from "../../../property/src/models/userModel";
-import { signIn } from "../../../property/src/middlewares/auth";
-import { NotFoundError } from "../../../common/src/errors/not-found-error";
+import { signIn } from "@property-app/common";
+import User, { IUser } from "../models/userModel";
 
 export const signup = async (req: Request, res: Response) => {
   const { name, lastName, email, isAdmin, gender, password } = req.body;
@@ -16,7 +15,7 @@ export const signup = async (req: Request, res: Response) => {
     password,
   });
 
-  const token = signIn(user._id);
+  const token = signIn(user._id, email);
   res.status(201).json({
     status: "ok",
     data: {
